@@ -9,6 +9,15 @@ const resolvers = {
       const res = await fetch(`${baseUrl}/tracks`);
       return res.json();
     },
+    track: (_, { id }, { dataSources }) => {
+      return dataSources.tracksAPI.getTrack(id);
+    },
+    trackFetch: async (_, { id }, { dataSources }) => {
+      const baseUrl = "https://odyssey-lift-off-rest-api.herokuapp.com";
+      const res = await fetch(`${baseUrl}/track/${id}`);
+      return res.json();
+      // return dataSources.tracksAPI.getTrack(id);
+    },
   },
   Track: {
     author: async ({ authorId }, _, { dataSources }) => {
@@ -16,6 +25,9 @@ const resolvers = {
       const res = await fetch(`${baseUrl}/author/${authorId}`);
       return res.json();
       // return dataSources.tracksAPI.getAuthor(authorId);
+    },
+    modules: ({ id }, _, { dataSources }) => {
+      return dataSources.tracksAPI.getTrackModules(id);
     },
   },
 };

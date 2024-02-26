@@ -5,6 +5,8 @@ const typeDefs = gql`
     "Get tracks array for homepage grid"
     tracksForHome: [Track!]!
     tracksForHomeFetch: [Track!]!
+    track(id: ID!): Track
+    trackFetch(id: ID!): Track
   }
 
   "A track is a group of Modules that teaches about a specific topic"
@@ -20,6 +22,20 @@ const typeDefs = gql`
     length: Int
     "The number of modules this track contains"
     modulesCount: Int
+    "The track's description"
+    description: String
+    "The track's modules"
+    numberOfViews: Int
+    "The track's modules"
+    modules: [Module!]!
+  }
+
+  type Module {
+    id: ID!
+    "The module's title"
+    title: String!
+    "The module's approximate length to complete, in minutes"
+    length: Int
   }
 
   "Author of a complete Track"
