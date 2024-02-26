@@ -2,29 +2,29 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { colors, mq } from '../styles';
 import { humanReadableTimeFromSeconds } from '../utils/helpers';
+import { Link } from "react-router-dom";
 
 /**
  * Track Card component renders basic info in a card format
  * for each track populating the tracks grid homepage.
  */
 const TrackCard = ({ track }) => {
-  const { title, thumbnail, author, length, modulesCount } = track;
+  const { title, thumbnail, author, length, modulesCount, id } = track;
 
   return (
-    <CardContainer>
+    <CardContainer to={`/track/${id}`}>
       <CardContent>
         <CardImageContainer>
           <CardImage src={thumbnail} alt={title} />
         </CardImageContainer>
         <CardBody>
-          <CardTitle>{title || ''}</CardTitle>
+          <CardTitle>{title || ""}</CardTitle>
           <CardFooter>
             <AuthorImage src={author.photo} />
             <AuthorAndTrack>
               <AuthorName>{author.name}</AuthorName>
               <TrackLength>
-                {modulesCount} modules -{' '}
-                {humanReadableTimeFromSeconds(length)}
+                {modulesCount} modules - {humanReadableTimeFromSeconds(length)}
               </TrackLength>
             </AuthorAndTrack>
           </CardFooter>
@@ -37,33 +37,33 @@ const TrackCard = ({ track }) => {
 export default TrackCard;
 
 /** Track Card styled components */
-const CardContainer = styled.div({
+const CardContainer = styled(Link)({
   borderRadius: 6,
   color: colors.text,
-  backgroundSize: 'cover',
-  backgroundColor: 'white',
-  boxShadow: '0px 1px 5px 0px rgba(0,0,0,0.15)',
-  backgroundPosition: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
+  backgroundSize: "cover",
+  backgroundColor: "white",
+  boxShadow: "0px 1px 5px 0px rgba(0,0,0,0.15)",
+  backgroundPosition: "center",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
   [mq[0]]: {
-    width: '90%',
+    width: "90%",
   },
   [mq[1]]: {
-    width: '47%',
+    width: "47%",
   },
   [mq[2]]: {
-    width: '31%',
+    width: "31%",
   },
   height: 380,
   margin: 10,
-  overflow: 'hidden',
-  position: 'relative',
-  ':hover': {
+  overflow: "hidden",
+  position: "relative",
+  ":hover": {
     backgroundColor: colors.pink.lightest,
   },
-  cursor: 'pointer',
+  cursor: "pointer",
 });
 
 const CardContent = styled.div({
