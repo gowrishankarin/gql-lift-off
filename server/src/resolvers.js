@@ -33,13 +33,22 @@ const resolvers = {
 
   Mutation: {
     incrementTrackViews: async (_, { id }, { dataSources }) => {
-      const track = await dataSources.tracksAPI.incrementTrackViews(id);
-      return {
-        code: 200,
-        success: true,
-        message: `Successfully incremented number of views for track ${id}`,
-        track,
-      };
+      try {
+        const track = await dataSources.tracksAPI.incrementTrackViews(id);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully incremented number of views for track ${id}`,
+          track,
+        };
+      } catch (err) {
+        return {
+          code: err.extension.response.status,
+          success: false,
+          message: err.extension.response.body,
+          track: null,
+        };
+      }
     },
   },
 };
