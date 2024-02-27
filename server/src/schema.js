@@ -1,6 +1,17 @@
 const gql = require("graphql-tag");
 
 const typeDefs = gql`
+  type Mutation {
+    incrementTrackViews(id: ID!): IncrementTrackViewsResponse!
+  }
+
+  type IncrementTrackViewsResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    track: Track
+  }
+
   type Query {
     "Get tracks array for homepage grid"
     tracksForHome: [Track!]!
