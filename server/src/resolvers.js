@@ -43,9 +43,9 @@ const resolvers = {
         };
       } catch (err) {
         return {
-          code: err.extension.response.status,
+          code: err.extensions.response.status,
           success: false,
-          message: err.extension.response.body,
+          message: err.extensions.response.body,
           track: null,
         };
       }
