@@ -1,3 +1,5 @@
+const { AuthenticationError } = require("./errors/auth.errors");
+
 const resolvers = {
   Query: {
     tracksForHome: (_, __, { dataSources }) => {
@@ -32,8 +34,24 @@ const resolvers = {
   },
 
   Mutation: {
-    incrementTrackViews: async (_, { id }, { dataSources }) => {
+    incrementTrackViews: async (
+      _,
+      { id },
+      { dataSources, userId, userInfo }
+    ) => {
       try {
+        if (!userId) {
+          console.log("Error Throw 1");
+          throw AuthenticationError(
+            "You are not authenticated to perform this action."
+          );
+        }
+
+        if (userRole !== "Host") {
+          throw ForbiddenError(
+            "You are not authorized to perform this action."
+          );
+        }
         const track = await dataSources.tracksAPI.incrementTrackViews(id);
         return {
           code: 200,

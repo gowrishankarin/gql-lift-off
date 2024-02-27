@@ -38,9 +38,21 @@ async function startApolloServer() {
     resolvers,
   });
   const { url } = await startStandaloneServer(server, {
-    context: async () => {
+    context: async ({ req }) => {
+      const token = req.headers.authorization || "";
+      const userId = token.split(" ")[1];
+      let userInfo = {};
+      if (userId) {
+        const { data } = await axios
+          .get(`http://localhost:4011/login/${userId}`)
+          .catch((error) => {
+            throw AuthenticationError();
+          });
+        userInfo = { userId: data.id, userRole: data.role };
+      }
       const { cache } = server;
       return {
+        ...userInfo,
         dataSources: {
           tracksAPI: new TrackAPI({ cache }),
         },
