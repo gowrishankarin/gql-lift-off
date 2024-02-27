@@ -43,12 +43,13 @@ async function startApolloServer() {
       const userId = token.split(" ")[1];
       let userInfo = {};
       if (userId) {
-        const { data } = await axios
-          .get(`http://localhost:4011/login/${userId}`)
-          .catch((error) => {
-            throw AuthenticationError();
-          });
-        userInfo = { userId: data.id, userRole: data.role };
+        // const { data } = await axios
+        //   .get(`http://localhost:4011/login/${userId}`)
+        //   .catch((error) => {
+        //     throw AuthenticationError();
+        //   });
+        // userInfo = { userId: data.id, userRole: data.role };
+        userInfo = { userId: "Shankar", userRole: "Host" };
       }
       const { cache } = server;
       return {

@@ -19,8 +19,8 @@ const ForbiddenError = (errMessage) => {
     extensions: {
       code: "FORBIDDEN",
       response: {
-        status: 401,
-        body: authErrMessage,
+        status: 403,
+        body: errMessage,
       },
     },
   });

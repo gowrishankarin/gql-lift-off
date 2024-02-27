@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("./errors/auth.errors");
+const { AuthenticationError, ForbiddenError } = require("./errors/auth.errors");
 
 const resolvers = {
   Query: {
@@ -37,11 +37,10 @@ const resolvers = {
     incrementTrackViews: async (
       _,
       { id },
-      { dataSources, userId, userInfo }
+      { dataSources, userId, userRole }
     ) => {
       try {
         if (!userId) {
-          console.log("Error Throw 1");
           throw AuthenticationError(
             "You are not authenticated to perform this action."
           );
